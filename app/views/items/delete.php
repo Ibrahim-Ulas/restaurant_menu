@@ -7,6 +7,7 @@
     <input type="hidden" name="id" value="<?= htmlspecialchars($item['id']) ?>">
     <p>Bu ürünü silmek istediğinizden emin misiniz? </p>
     <button type="submit" class="btn btn-danger">Evet, Sil</button>
+    <a href="/restaurant_menu/public/Items/index?categoryId=<?= $item['category_id'] ?>" class="btn btn-secondary">Hayır, Geri Dön</a>
 </form>
 
 <?php endif; ?>

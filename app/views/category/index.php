@@ -15,7 +15,7 @@
                     <a href="/restaurant_menu/public/Category/edit?id=<?= $category['id'] ?>" class="btn btn-warning btn-sm" onclick="return confirm ('Bu kategoriyi silmek istediğinizden emin misiniz?')">Düzenle</a>
                     <a href="/restaurant_menu/public/Category/delete?id=<?= $category['id'] ?>" class="btn btn-danger btn-sm">Sil</a>
                 </td>
-                <td><a href="/restaurant_menu/public/Items/add?id=<?= $category['id'] ?>" class="btn btn-primary">Yeni Ürün Ekle</a>
+                <td><a href="/restaurant_menu/public/Items/add?categoryId=<?= $category['id'] ?>" class="btn btn-primary">Yeni Ürün Ekle</a>
             </td>
             </tr>
         <?php endforeach; ?>

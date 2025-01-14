@@ -7,9 +7,9 @@ use App\Models\Category;
 
 class ItemController {
     public function index($params) {
-        $categoryId = $params['categoryId'] ?? null;
+        $categoryId = $params['categoryId'] ?? $_GET['categoryId'] ?? null;
         if (!$categoryId) {
-            echo "Kategori ID bulunamadı!";
+            echo "Kategori ID ($categoryId) veritabanında bulunamadı!";
             echo '<br><a href="/restaurant_menu/public/Category/index" class="btn btn-primary">Kategorilere Geri Dön</a>';
             return;
         }
@@ -19,7 +19,7 @@ class ItemController {
     
         if ($items === false || empty($items)) {
             echo "Bu kategoride ürün bulunmamaktadır.";            
-            echo '<br><a href="/restaurant_menu/public/Items/add?id='.htmlspecialchars($categoryId).'" class="btn btn-primary">Yeni Ürün Ekle</a>';
+            echo '<br><a href="/restaurant_menu/public/Items/add?categoryId='.htmlspecialchars($categoryId).'" class="btn btn-primary">Yeni Ürün Ekle</a>';
             echo '<br><a href="/restaurant_menu/public/Category/index" class="btn btn-primary">Kategorilere Geri Dön</a>';
             return;
         }
@@ -29,7 +29,7 @@ class ItemController {
     
     public function add($params) {
         // URL'den categoryId al
-        $categoryId = $params['categoryId'] ?? null;
+        $categoryId = $params['categoryId'] ?? $_GET['categoryId'] ??null;
     
         if (!$categoryId || !is_numeric($categoryId)) {
             echo "Kategori ID bulunamadı veya geçersiz!";
@@ -72,7 +72,7 @@ class ItemController {
     }
     
     public function store($params) {
-        $itemModel = new Item();
+        
     
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
@@ -83,14 +83,19 @@ class ItemController {
             ];
     
             // Ürünü veritabanına ekle
-            $itemModel->create($data);
-    
+            $itemModel = new Item();
+            $success = $itemModel->create($data);
+            
             // İşlem sonrası ilgili kategoriye geri yönlendir
-            header("Location: /restaurant_menu/public/Items/index?categoryId=" . $data['category_id']);
-            exit;
+            
+            if ($success) {
+                header("Location: /restaurant_menu/public/Items/index?categoryId=" . $data['category_id']);
+                exit;
+            } else {
+                echo "Ürün eklenirken bir hata oluştu!";
+            }
         }
     }
-    
     public function edit($id) {
         $itemModel = new Item();
         $item = $itemModel->find($id);

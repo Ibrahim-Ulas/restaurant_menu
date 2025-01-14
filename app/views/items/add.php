@@ -8,25 +8,21 @@ if (!$categoryId) {
 ?>
 
 <h1>Yeni Ürün Ekle</h1>
-<form method="POST" action="/restaurant_menu/public/Items/store">
-    <!-- Kategori ID'si gizli input -->
+<form action="/restaurant_menu/public/Items/add?categoryId=<?= htmlspecialchars($categoryId) ?>" method="post">
     <input type="hidden" name="category_id" value="<?= htmlspecialchars($categoryId) ?>">
-    
-    <div class="mb-3">
-        <label for="name" class="form-label">Ürün Adı</label>
-        <input type="text" class="form-control" id="name" name="name" required>
+    <div class="form-group">
+        <label for="name">Ürün Adı:</label>
+        <input type="text" name="name" id="name" class="form-control" required>
     </div>
-    
-    <div class="mb-3">
-        <label for="price" class="form-label">Fiyat</label>
-        <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+    <div class="form-group">
+        <label for="price">Fiyat:</label>
+        <input type="number" step="0.01" name="price" id="price" class="form-control" required>
     </div>
-    
-    <div class="mb-3">
-        <label for="description" class="form-label">Açıklama</label>
-        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+    <div class="form-group">
+        <label for="description">Açıklama:</label>
+        <textarea name="description" id="description" class="form-control"></textarea>
     </div>
-    
-    <button type="submit" class="btn btn-primary">Ekle</button>
+    <button type="submit" class="btn btn-primary">Ürünü Kaydet</button>
 </form>
+
 <a href="/restaurant_menu/public/Category/index?categoryId=<?= htmlspecialchars($categoryId) ?>" class="btn btn-secondary">Geri Dön</a>
